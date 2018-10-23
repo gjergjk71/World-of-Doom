@@ -11,6 +11,8 @@ class Player:
 					run_animation_speed=10,
 					gravity=50):
 		self.screen = screen
+		self.run_animation = run_animation
+		self.idle_animation = idle_animation
 		self.player_current_animation = idle_animation
 		self.item = 0
 		self.float_item = 0.0
@@ -27,8 +29,9 @@ class Player:
 		self.float_y = self.playerRect.y
 		self.gravity_float = 0
 		self.gravity = gravity
-		self.on_floor = False
+		self.on_floor = True
 	def blitme(self):
+		print(self.playerRect.x,self.playerRect.y)
 		self.gravity_float += self.gravity * self.dt
 		self.float_x += self.motion[0] * self.dt
 		self.float_y += self.motion[1] * self.dt
@@ -47,9 +50,9 @@ class Player:
 			self.item = 0
 			self.float_item = 0
 		self.screen.blit(self.player_current_animation[self.item],self.playerRect)
-		if self.player_current_animation == run_animation:
+		if self.player_current_animation == self.run_animation:
 			self.float_item += self.dt * self.run_animation_speed
-		elif self.player_current_animation == player_idle:
+		elif self.player_current_animation == self.idle_animation:
 			self.float_item += self.dt * self.idle_animation_speed
 		self.item = int(self.float_item)
 	def handle_events(self,events):
@@ -57,7 +60,7 @@ class Player:
 			if event.type == pygame.KEYDOWN:
 				speed = self.running_speed
 				if event.key in [pygame.K_LEFT,pygame.K_RIGHT]:
-					self.player_current_animation = run_animation
+					self.player_current_animation = self.run_animation
 				if event.key == pygame.K_LEFT: self.motion[0] = -speed;
 				if event.key == pygame.K_RIGHT: self.motion[0] = speed
 				if event.key == pygame.K_UP: self.motion[1] = -speed
@@ -68,4 +71,4 @@ class Player:
 				if event.key in [pygame.K_DOWN,pygame.K_UP]:
 					self.motion[1] = 0
 				if not self.motion[0] and not self.motion[1]:
-					self.player_current_animation = player_idle
+					self.player_current_animation = self.idle_animation

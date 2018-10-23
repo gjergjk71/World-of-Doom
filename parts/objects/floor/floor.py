@@ -1,8 +1,8 @@
 
 class Floor:
-	def __init__(self,screen,last_floor_rect=None):
+	def __init__(self,screen,floor_image,last_floor_rect=None):
 		self.screen = screen
-		self.floor_image = floor_big
+		self.floor_image = floor_image
 		self.floor_rect = self.floor_image.get_rect()
 		if last_floor_rect is None:
 			self.floor_rect.x = 200

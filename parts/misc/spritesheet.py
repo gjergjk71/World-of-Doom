@@ -1,6 +1,5 @@
 import pygame
-pygame.init()
-pygame.display.set_mode()
+pygame.display.set_mode([500,500])
 
 class SpriteSheet:
 	def __init__(self,filename):
