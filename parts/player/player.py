@@ -20,3 +20,27 @@ class Player:
 		self.gravity_float = 0
 		self.gravity = 50
 		self.on_floor = False
+	def blitme(self):
+		self.gravity_float += self.gravity * self.dt
+		self.float_x += self.motion[0] * self.dt
+		self.float_y += self.motion[1] * self.dt
+		if int(self.gravity_float):
+			if not self.on_floor:
+				self.playerRect.y += int(self.gravity_float)
+			self.gravity_float = 0
+		if int(self.float_x):
+			self.playerRect.x += int(self.float_x)
+			self.float_x = 0
+		if int(self.float_y):
+			self.playerRect.y += int(self.float_y)
+			self.float_y = 0
+
+		if self.item >= len(self.player_current_animation):
+			self.item = 0
+			self.float_item = 0
+		self.screen.blit(self.player_current_animation[self.item],self.playerRect)
+		if self.player_current_animation == run_animation:
+			self.float_item += self.dt * self.run_animation_speed
+		elif self.player_current_animation == player_idle:
+			self.float_item += self.dt * self.idle_animation_speed
+		self.item = int(self.float_item)
