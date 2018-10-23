@@ -44,3 +44,20 @@ class Player:
 		elif self.player_current_animation == player_idle:
 			self.float_item += self.dt * self.idle_animation_speed
 		self.item = int(self.float_item)
+	def handle_events(self,events):
+		for event in events:
+			if event.type == pygame.KEYDOWN:
+				speed = self.running_speed
+				if event.key in [pygame.K_LEFT,pygame.K_RIGHT]:
+					self.player_current_animation = run_animation
+				if event.key == pygame.K_LEFT: self.motion[0] = -speed;
+				if event.key == pygame.K_RIGHT: self.motion[0] = speed
+				if event.key == pygame.K_UP: self.motion[1] = -speed
+				if event.key == pygame.K_DOWN: self.motion[1] = speed
+			elif event.type == pygame.KEYUP:
+				if event.key in [pygame.K_LEFT,pygame.K_RIGHT]:
+					self.motion[0] = 0
+				if event.key in [pygame.K_DOWN,pygame.K_UP]:
+					self.motion[1] = 0
+				if not self.motion[0] and not self.motion[1]:
+					self.player_current_animation = player_idle
