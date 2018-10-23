@@ -43,7 +43,6 @@ getTicksLastFrame = 0
 while 1:
 	t = pygame.time.get_ticks()
 	deltaTime = (t - getTicksLastFrame) / 1000.0
-	pressedKey = pygame.key.get_pressed()
 	events = pygame.event.get()
 	for event in events:
 		if event.type == pygame.QUIT:

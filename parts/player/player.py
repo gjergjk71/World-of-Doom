@@ -31,7 +31,6 @@ class Player:
 		self.gravity = gravity
 		self.on_floor = True
 	def blitme(self):
-		print(self.playerRect.x,self.playerRect.y)
 		self.gravity_float += self.gravity * self.dt
 		self.float_x += self.motion[0] * self.dt
 		self.float_y += self.motion[1] * self.dt
