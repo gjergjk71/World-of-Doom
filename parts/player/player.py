@@ -69,5 +69,5 @@ class Player:
 					self.motion[0] = 0
 				if event.key in [pygame.K_DOWN,pygame.K_UP]:
 					self.motion[1] = 0
-				if not self.motion[0] and not self.motion[1]:
+				if not self.motion[0] or not self.motion[0] and not self.motion[1]:
 					self.player_current_animation = self.idle_animation
