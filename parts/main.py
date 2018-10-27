@@ -39,10 +39,12 @@ player_idle = [
 ]
 
 inventoryUi_spritesheet = SpriteSheet("inventory/sprites/ui_split.png")
-inventory_image = inventoryUi_spritesheet.image_at((3,97,121,175))
+inventory_opened = inventoryUi_spritesheet.image_at((3,97,121,175))
+inventory_closed = inventoryUi_spritesheet.image_at((127,101,18,20))
+closeInventory_rect = pygame.Rect(97,6,26,31)
 
 player = Player(screen,100,1,idle_animation=player_idle,run_animation=player_run)
-inventory = Inventory(screen,inventory_image,10,10,10,10,[],[])
+inventory = Inventory(screen,inventory_opened,inventory_closed,closeInventory_rect,[],[])
 getTicksLastFrame = 0
 while 1:
 	t = pygame.time.get_ticks()
@@ -62,6 +64,7 @@ while 1:
 	player.dt = deltaTime
 	player.handle_events(events)
 	player.blitme()
+	inventory.handle_events(events)
 	inventory.blitme()
 
 	
