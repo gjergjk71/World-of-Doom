@@ -2,6 +2,7 @@ import sys, pygame,datetime
 from player.player import Player
 from objects.floor.floor import Floor
 from misc.spritesheet import SpriteSheet
+from inventory.inventory import Inventory
 
 pygame.init()
 
@@ -37,8 +38,11 @@ player_idle = [
 	player_spritesheet.image_at((162,6,24,32),scale2x=True),
 ]
 
+inventoryUi_spritesheet = SpriteSheet("inventory/sprites/ui_split.png")
+inventory_image = inventoryUi_spritesheet.image_at((3,97,121,175))
 
 player = Player(screen,100,1,idle_animation=player_idle,run_animation=player_run)
+inventory = Inventory(screen,inventory_image,10,10,10,10,[],[])
 getTicksLastFrame = 0
 while 1:
 	t = pygame.time.get_ticks()
@@ -58,6 +62,7 @@ while 1:
 	player.dt = deltaTime
 	player.handle_events(events)
 	player.blitme()
+	inventory.blitme()
 
 	
 	pygame.display.flip()
