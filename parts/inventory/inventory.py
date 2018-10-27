@@ -18,9 +18,11 @@ class Inventory:
 			self.screen.blit(self.inventory_closed,self.inventoryClosed_rect)
 	def handle_events(self,events):
 		for event in events:
-			if event.type == pygame.MOUSEBUTTONUP:
-				pos = pygame.mouse.get_pos()
-				if self.inventoryClosed_rect.collidepoint(pos):
-					self.state = "Open"
-				elif self.closeInventory_rect.collidepoint(pos):
-					self.state = "Closed"
+			self.open_close_inventory(event)
+	def open_close_inventory(self,event):
+		if event.type == pygame.MOUSEBUTTONUP:
+			pos = pygame.mouse.get_pos()
+			if self.inventoryClosed_rect.collidepoint(pos):
+				self.state = "Open"
+			elif self.closeInventory_rect.collidepoint(pos):
+				self.state = "Closed"
