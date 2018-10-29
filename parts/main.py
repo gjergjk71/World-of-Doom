@@ -60,7 +60,7 @@ while 1:
 		player.check_on_floor(floor)
 
 	player.dt = deltaTime
-	player.handle_events(events,floors)
+	player.handle_events(events)
 	player.blitme()
 	inventory.handle_events(events)
 	inventory.blitme()
