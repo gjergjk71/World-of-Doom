@@ -57,9 +57,7 @@ while 1:
 	player.on_floor = False
 	for floor in floors:
 		floor.blitme()
-		collisionDetected = floor.floor_rect.colliderect(player.playerRect)
-		if collisionDetected and not player.on_floor:
-			player.on_floor = True
+		player.check_on_floor(floor)
 
 	player.dt = deltaTime
 	player.handle_events(events,floors)
