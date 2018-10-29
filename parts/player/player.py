@@ -54,7 +54,7 @@ class Player:
 		elif self.player_current_animation == self.idle_animation:
 			self.float_item += self.dt * self.idle_animation_speed
 		self.item = int(self.float_item)
-	def handle_events(self,events,floors):
+	def handle_events(self,events):
 		for event in events:
 			if event.type == pygame.KEYDOWN:
 				speed = self.running_speed
