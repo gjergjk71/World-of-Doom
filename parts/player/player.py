@@ -64,13 +64,7 @@ class Player:
 				if event.key == pygame.K_RIGHT: self.motion[0] = speed
 				if event.key == pygame.K_UP: self.motion[1] = -speed
 				if event.key == pygame.K_DOWN:
-					on_floor = False
-					for floor in floors:
-						on_floor = self.playerRect.colliderect(floor.floor_rect)
-						print(on_floor)
-						if on_floor:
-							break
-					if not on_floor:
+					if not self.on_floor:
 						self.motion[1] = speed
 			elif event.type == pygame.KEYUP:
 				if event.key in [pygame.K_LEFT,pygame.K_RIGHT]:
@@ -79,3 +73,6 @@ class Player:
 					self.motion[1] = 0
 				if not self.motion[0] or not self.motion[0] and not self.motion[1]:
 					self.player_current_animation = self.idle_animation
+	def check_on_floor(self,floor):
+		if not self.on_floor:
+			self.on_floor = floor.floor_rect.colliderect(self.playerRect)
