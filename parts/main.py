@@ -38,7 +38,7 @@ player_idle = [
 	player_spritesheet.image_at((162,6,24,32),scale2x=True),
 ]
 
-inventoryUi_spritesheet = SpriteSheet("inventory/sprites/ui_split.png")
+inventoryUi_spritesheet = SpriteSheet("sprites/ui/ui_split.png")
 inventory_opened = inventoryUi_spritesheet.image_at((3,97,121,175))
 inventory_closed = inventoryUi_spritesheet.image_at((127,101,18,20))
 closeInventory_rect = pygame.Rect(97,6,26,31)
