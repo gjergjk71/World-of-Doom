@@ -2,6 +2,7 @@ import sys, pygame,datetime
 from player.player import Player
 from objects.floor.floor import Floor
 from misc.spritesheet import SpriteSheet
+from inventory.inventory import Inventory
 
 pygame.init()
 
@@ -37,8 +38,13 @@ player_idle = [
 	player_spritesheet.image_at((162,6,24,32),scale2x=True),
 ]
 
+inventoryUi_spritesheet = SpriteSheet("sprites/ui/ui_split.png")
+inventory_opened = inventoryUi_spritesheet.image_at((3,97,121,175))
+inventory_closed = inventoryUi_spritesheet.image_at((127,101,18,20))
+closeInventory_rect = pygame.Rect(97,6,26,31)
 
 player = Player(screen,100,1,idle_animation=player_idle,run_animation=player_run)
+inventory = Inventory(screen,inventory_opened,inventory_closed,closeInventory_rect,[],[])
 getTicksLastFrame = 0
 while 1:
 	t = pygame.time.get_ticks()
@@ -51,13 +57,13 @@ while 1:
 	player.on_floor = False
 	for floor in floors:
 		floor.blitme()
-		collisionDetected = floor.floor_rect.colliderect(player.playerRect)
-		if collisionDetected and not player.on_floor:
-			player.on_floor = True
+		player.check_on_floor(floor)
 
 	player.dt = deltaTime
 	player.handle_events(events)
 	player.blitme()
+	inventory.handle_events(events)
+	inventory.blitme()
 
 	
 	pygame.display.flip()

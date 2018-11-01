@@ -55,6 +55,9 @@ class Player:
 			self.float_item += self.dt * self.idle_animation_speed
 		self.item = int(self.float_item)
 	def handle_events(self,events):
+		if self.on_floor:
+			if self.motion[1] > 0:
+				self.motion[1] = 0 
 		for event in events:
 			if event.type == pygame.KEYDOWN:
 				speed = self.running_speed
@@ -63,11 +66,16 @@ class Player:
 				if event.key == pygame.K_LEFT: self.motion[0] = -speed;
 				if event.key == pygame.K_RIGHT: self.motion[0] = speed
 				if event.key == pygame.K_UP: self.motion[1] = -speed
-				if event.key == pygame.K_DOWN: self.motion[1] = speed
+				if event.key == pygame.K_DOWN:
+					if not self.on_floor:
+						self.motion[1] = speed
 			elif event.type == pygame.KEYUP:
 				if event.key in [pygame.K_LEFT,pygame.K_RIGHT]:
 					self.motion[0] = 0
 				if event.key in [pygame.K_DOWN,pygame.K_UP]:
 					self.motion[1] = 0
-				if not self.motion[0] and not self.motion[1]:
+				if not self.motion[0] or not self.motion[0] and not self.motion[1]:
 					self.player_current_animation = self.idle_animation
+	def check_on_floor(self,floor):
+		if not self.on_floor:
+			self.on_floor = floor.floor_rect.colliderect(self.playerRect)
