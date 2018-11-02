@@ -6,21 +6,24 @@ class Item:
 		self.screen = screen
 		self.item_image = item_image
 		self.item_rect = pygame.Rect((x,y,w,h))
-		print(self.item_rect)
-		self.x = x
-		self.y = y
-		self.w = w
-		self.h = h
+		self.dragging = False
 	def blitme(self):
 		if self.item_image:
 			self.screen.blit(self.item_image,self.item_rect)
-
 	def handle_events(self,events):
 		for event in events:
-			if event.type == pygame.MOUSEBUTTONUP:
-				pos = pygame.mouse.get_pos()
-				if self.item_rect.collidepoint(pos) and self.inventory.state == "Open":
-					print("Clicked")
+			pos = pygame.mouse.get_pos()
+			if self.inventory.state == "Open":
+				if event.type == pygame.MOUSEBUTTONDOWN:
+					if event.button == 1 and self.item_rect.collidepoint(pos):
+						self.dragging = True
+						print(self.dragging)
+				elif event.type == pygame.MOUSEBUTTONUP:
+					if event.button == 1:
+						self.dragging = False
+				if self.dragging:
+					self.item_rect.x = pos[0]
+					self.item_rect.y = pos[1]
 
 class Inventory:
 	def __init__(self,screen,inventory_opened,inventory_closed,closeInventory_rect,items,slots,state="Closed"):
