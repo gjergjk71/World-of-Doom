@@ -54,10 +54,10 @@ class Inventory:
 	def blitme(self):	
 		if self.state == "Open":
 			self.screen.blit(self.inventory_opened,self.inventoryOpened_rect)
+			for item in self.items:
+				item.blitme()
 		elif self.state == "Closed":
 			self.screen.blit(self.inventory_closed,self.inventoryClosed_rect)
-		for item in self.items:
-			item.blitme()
 	def handle_events(self,events):
 		for event in events:
 			self.open_close_inventory(event)
