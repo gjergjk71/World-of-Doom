@@ -6,10 +6,10 @@ from inventory.inventory import Inventory
 
 pygame.init()
 
-size = width, height = 800, 800
+size = width, height = 500, 500
 speed = [5,5];
 black = 0,0,0
-screen = pygame.display.set_mode([500,500]);
+screen = pygame.display.set_mode(size);
 
 floor_spritesheet = SpriteSheet("objects/floor/cave_tileset.png")
 floor_big = floor_spritesheet.image_at((0,120,96,48))
@@ -42,9 +42,11 @@ inventoryUi_spritesheet = SpriteSheet("sprites/ui/ui_split.png")
 inventory_opened = inventoryUi_spritesheet.image_at((3,97,121,175))
 inventory_closed = inventoryUi_spritesheet.image_at((127,101,18,20))
 closeInventory_rect = pygame.Rect(97,6,26,31)
-
+#greyPotionImage = pygame.image.load("sprites/inventory/potion_grey.png")
+greyPotionImage = inventoryUi_spritesheet.image_at((12,93,11,12))
 player = Player(screen,100,1,idle_animation=player_idle,run_animation=player_run)
-inventory = Inventory(screen,inventory_opened,inventory_closed,closeInventory_rect,[],[])
+inventory = Inventory(screen,inventory_opened,inventory_closed,closeInventory_rect,[],[2,4])
+inventory.items[0].item_image = greyPotionImage
 getTicksLastFrame = 0
 while 1:
 	t = pygame.time.get_ticks()
@@ -53,6 +55,8 @@ while 1:
 	for event in events:
 		if event.type == pygame.QUIT:
 			sys.exit()
+		if event.type == pygame.MOUSEBUTTONUP:
+			print(event)
 	screen.fill(black)
 	player.on_floor = False
 	for floor in floors:
@@ -63,6 +67,7 @@ while 1:
 	player.handle_events(events)
 	player.blitme()
 	inventory.handle_events(events)
+	inventory.handle_item_events(events)
 	inventory.blitme()
 
 	
